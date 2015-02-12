@@ -1,0 +1,36 @@
+{
+    "name":         "saeven/zf2-circlical-recaptcha",
+    "description":  "ZF2 module that lets you easily incorporate Google's new, simpler recaptcha (I am not a robot)",
+    "type":         "library",
+    "license":      "MIT",
+    "homepage":     "https://github.com/Saeven/zf2-circlical-recaptcha",
+    "keywords": [
+        "zf2",
+        "google",
+        "recaptcha",
+        "form",
+        "captcha"
+    ],
+    "authors": [
+        {
+            "name":      "Alexandre Lemaire",
+            "email":     "alemaire@circlical.com",
+            "homepage":  "http://circlical.com/",
+            "role":      "Developer"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {
+        "php": ">=5.4",
+    },
+    "autoload": {
+        "psr-0": {
+            "CirclicalRecaptcha\\": "src/"
+        }
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-master": "0.1-dev"
+        }
+    }
+}
