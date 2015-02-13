@@ -85,9 +85,6 @@ class UserForm extends Form
               'type'    => Recaptcha::class,
               'options' => [
                   'label'     => _( "Please complete the challenge below" ),
-                  'recaptcha' => [
-                      'secret' => $this->captcha_secret,
-                  ],
               ],
           ]);
 
