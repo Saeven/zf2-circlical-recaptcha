@@ -44,8 +44,14 @@ class RecaptchaFactory implements FactoryInterface
          * @var \Doctrine\Common\Persistence\ObjectRepository $userRepository
          * @var \Zend\InputFilter\InputFilterPluginManager $serviceLocator
          */
-        $validator = $serviceLocator->getServiceLocator()->get( 'ValidatorManager' )->get( RecaptchaValidator::class );
-        return new Recaptcha( $validator );
+
+        $serviceManager = $serviceLocator->getServiceLocator();
+
+        $validator = $serviceManager->get('ValidatorManager')->get( RecaptchaValidator::class );
+        $config    = $serviceManager->get('config');
+        $secret    = !empty( $config['circlical']['recaptcha']['client'] ) ? $config['circlical']['recaptcha']['client'] : 'configure_me';
+
+        return new Recaptcha( $validator, $secret );
     }
 }
 

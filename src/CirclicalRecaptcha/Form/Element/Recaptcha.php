@@ -39,14 +39,11 @@ class Recaptcha extends Element implements InputProviderInterface
 
     protected $secret;
 
-    public function getSecret()
-    {
-        return $this->getOptions()['recaptcha']['secret'];
-    }
 
-    public function __construct( $validator ){
+    public function __construct( $validator, $secret ){
         parent::__construct();
         $this->validator = $validator;
+        $this->secret    = $secret;
     }
 
     public function getInputSpecification()
