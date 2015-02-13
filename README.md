@@ -40,7 +40,7 @@ You need to add the captcha to your templates,  E.g., using Twig it'd look like:
 <div class="form-group" style="margin-bottom:25px;margin-top:25px;">
     {{ formLabel( form.get('g-recaptcha-response') ) }}
     {{ recaptcha( form.get('g-recaptcha-response') ) }}
-    <div class="error_container alert alert-danger">{{ formElementErrors( form.get('g-recaptcha-response'), error_format ) }}</div>
+    <div class="error_container alert alert-danger">{{ formElementErrors( form.get('g-recaptcha-response') ) }}</div>
 </div>
 ```
 *For now, the g-recaptcha-response is not mutable.  The reason being that Google renders it with this name, there's no option to change*
@@ -134,34 +134,6 @@ And here's a sample InputFilter
 
 ```php
 <?php
-
-/**
-,,
-`""*3b..											
-     ""*3o.					  						2/10/15 3:44 PM
-         "33o.			                  			S. Alexandre M. Lemaire
-           "*33o.                                 	(c) Launchfire Interactive Inc.
-              "333o.								Redistribution of these files is illegal.
-                "3333bo...       ..o:
-                  "33333333booocS333    ..    ,.
-               ".    "*3333SP     V3o..o33. .333b
-                "33o. .33333o. ...A33333333333333b
-          ""bo.   "*33333333333333333333P*33333333:
-             "33.    V333333333P"**""*"'   VP  * "l
-               "333o.433333333X
-                "*3333333333333AoA3o..oooooo..           .b
-                       .X33333333333P""     ""*oo,,     ,3P
-                      33P""V3333333:    .        ""*****"
-                    .*"    A33333333o.4;      .
-                         .oP""   "333333b.  .3;
-                                  A3333333333P
-                                  "  "33333P"
-                                      33P*"
-		                              .3"
-                                     "
-                                     
-                                     
-*/
 
 namespace CirclicalUser\InputFilter;
 
