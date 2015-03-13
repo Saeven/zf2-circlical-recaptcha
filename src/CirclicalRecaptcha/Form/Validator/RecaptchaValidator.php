@@ -98,6 +98,7 @@ class RecaptchaValidator extends AbstractValidator
 
         if( !trim( $value ) )
         {
+	        $this->error_codes[] = 'no-value-set';
             $this->error( self::NOT_ANSWERED );
             return false;
         }
@@ -123,6 +124,7 @@ class RecaptchaValidator extends AbstractValidator
             }
             else
             {
+	            $this->error_codes[] = 'no-error-codes';
                 $this->error( self::EXPIRED );
             }
             return false;
