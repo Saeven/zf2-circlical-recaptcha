@@ -54,6 +54,13 @@ class RecaptchaValidator extends AbstractValidator
         $this->secret = $key;
     }
 
+
+	private $error_codes = [];
+
+	public function getErrorCodes(){
+		return $this->error_codes;
+	}
+
     public static function getIP()
     {
         $ip = FALSE;
@@ -109,7 +116,10 @@ class RecaptchaValidator extends AbstractValidator
             if( !empty( $json['error-codes'] ) )
             {
                 foreach( $json['error-codes'] as $r )
-                    $this->error( $r );
+                {
+	                $this->error_codes[] = $r;
+	                $this->error( $r );
+                }
             }
             else
             {
