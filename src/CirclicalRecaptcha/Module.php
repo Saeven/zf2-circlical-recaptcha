@@ -2,6 +2,7 @@
 
 namespace CirclicalRecaptcha;
 
+use Zend\Mvc\MvcEvent;
 
 class Module
 {
@@ -28,7 +29,7 @@ class Module
     }
 
 
-	public function onBootstrap(MvcEvent $e)
+	public function onBootstrap( $e)
     {
         $application    = $e->getApplication();
         $services       = $application->getServiceManager();
