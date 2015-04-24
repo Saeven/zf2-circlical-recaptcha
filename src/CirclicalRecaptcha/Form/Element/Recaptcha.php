@@ -35,6 +35,10 @@ use Zend\InputFilter\InputProviderInterface;
 
 class Recaptcha extends Element implements InputProviderInterface
 {
+	protected $attributes = array(
+        'type' => 'recaptcha'
+    );
+
     protected $validator;
 
     protected $secret;
