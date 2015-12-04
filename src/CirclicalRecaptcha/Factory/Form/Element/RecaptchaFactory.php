@@ -31,7 +31,6 @@
 namespace CirclicalRecaptcha\Factory\Form\Element;
 
 use CirclicalRecaptcha\Form\Element\Recaptcha;
-use CirclicalRecaptcha\Form\Validator\RecaptchaValidator;
 use Zend\ServiceManager\FactoryInterface;
 use Zend\ServiceManager\ServiceLocatorInterface;
 
@@ -46,12 +45,10 @@ class RecaptchaFactory implements FactoryInterface
          */
 
         $serviceManager = $serviceLocator->getServiceLocator();
+        $config = $serviceManager->get('config');
+        $secret = !empty( $config['circlical']['recaptcha']['client'] ) ? $config['circlical']['recaptcha']['client'] : 'configure_me';
 
-        $validator = $serviceManager->get('ValidatorManager')->get( RecaptchaValidator::class );
-        $config    = $serviceManager->get('config');
-        $secret    = !empty( $config['circlical']['recaptcha']['client'] ) ? $config['circlical']['recaptcha']['client'] : 'configure_me';
-
-        return new Recaptcha( $validator, $secret );
+        return new Recaptcha( $secret );
     }
 }
 
