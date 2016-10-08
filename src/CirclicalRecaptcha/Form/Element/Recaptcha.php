@@ -3,15 +3,12 @@
 namespace CirclicalRecaptcha\Form\Element;
 
 use Zend\Form\Element;
-use Zend\InputFilter\InputProviderInterface;
 
-class Recaptcha extends Element implements InputProviderInterface
+class Recaptcha extends Element
 {
     protected $attributes = [
         'type' => 'recaptcha',
     ];
-
-    protected $validator;
 
     protected $secret;
 
@@ -20,21 +17,8 @@ class Recaptcha extends Element implements InputProviderInterface
         return $this->secret;
     }
 
-    public function __construct($validator, $secret)
-    {
+    public function __construct( $secret ){
         parent::__construct();
-        $this->validator = $validator;
         $this->secret = $secret;
-    }
-
-    public function getInputSpecification()
-    {
-        return [
-            'name' => $this->getName(),
-            'required' => true,
-            'validators' => [
-                $this->validator,
-            ],
-        ];
     }
 }
