@@ -17,7 +17,8 @@ class Recaptcha extends Element
         return $this->secret;
     }
 
-    public function __construct( $secret ){
+    public function __construct($secret)
+    {
         parent::__construct();
         $this->secret = $secret;
     }
