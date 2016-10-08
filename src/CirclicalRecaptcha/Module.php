@@ -2,24 +2,8 @@
 
 namespace CirclicalRecaptcha;
 
-use Zend\Mvc\MvcEvent;
-
 class Module
 {
-    /**
-     * {@inheritDoc}
-     */
-    public function getAutoloaderConfig()
-    {
-        return array(
-            'Zend\Loader\StandardAutoloader' => array(
-                'namespaces' => array(
-                    __NAMESPACE__ => __DIR__ . '/../../src/' . __NAMESPACE__,
-                ),
-            ),
-        );
-    }
-
     /**
      * {@inheritDoc}
      */
@@ -29,11 +13,10 @@ class Module
     }
 
 
-	public function onBootstrap( $e)
+    public function onBootstrap($e)
     {
-        $application    = $e->getApplication();
-        $services       = $application->getServiceManager();
-
-	    $services->get('ViewHelperManager')->get('FormElement')->addType( 'recaptcha', 'recaptcha' );
+        $application = $e->getApplication();
+        $services = $application->getServiceManager();
+        $services->get('ViewHelperManager')->get('FormElement')->addType('recaptcha', 'recaptcha');
     }
 }
