@@ -1,4 +1,6 @@
 # zf2-circlical-recaptcha
+[![Total Downloads](https://poser.pugx.org/saeven/zf2-circlical-recaptcha/downloads)](https://packagist.org/packages/saeven/zf2-circlical-recaptcha)
+
 
 Google just rolled out their great new CAPTCHA (fewer angry old people is always great!), and you want to get it into your ZF2 project!  Please users and management alike with this easy module.
 
