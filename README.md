@@ -87,6 +87,8 @@ class UserForm extends Form
               'type'    => Recaptcha::class,
               'options' => [
                   'label'     => _( "Please complete the challenge below" ),
+                  'no_sitekey' => false,
+                  'no_script' => false,
               ],
           ]);
 
@@ -235,4 +237,4 @@ class UserInputFilter extends InputFilter implements UserInputFilterInterface
 }
 ```
 
-That's all there is to it!
+That's all there is to it!  Note the optional `no_sitekey` and `no_script` options on the form init.  These are handy if you are sticking many recaptchas on the same view, but need to dynamically fade them in and out.
