@@ -11,20 +11,19 @@ class Recaptcha extends FormElement
     public function render(ElementInterface $element)
     {
         $noScript = $element->getOption('no_script');
-        $noSitekey = $element->getOption('no_sitekey');
+        $noSiteKey = $element->getOption('no_sitekey');
+        $elementId = $element->getAttribute('id');
 
-        $sitekeyVariable = $noSitekey ? '' : 'data-sitekey="' . $element->getSecret() . '"';
-
-        $output = '<div class="form-group">
-            <div id="register_recaptcha">
-                <div class="g-recaptcha" ' . $sitekeyVariable . '></div>
+        return sprintf(
+            '<div class="form-group">
+                <div%s>
+                    <div class="g-recaptcha"%s></div>
+                </div>
             </div>
-        </div>';
-
-        if (!$noScript) {
-            $output .= '<script src="//www.google.com/recaptcha/api.js"></script>';
-        }
-
-        return $output;
+            %s',
+            $elementId ? ' id="' . $elementId . '"' : '',
+            $noSiteKey ? '' : 'data-sitekey="' . $element->getSecret() . '"',
+            $noScript ? '' : '<script src="//www.google.com/recaptcha/api.js"></script>'
+        );
     }
 }
