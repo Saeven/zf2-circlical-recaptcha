@@ -1,6 +1,8 @@
 # Easy Google Captcha for Zend Framework 3
 [![Total Downloads](https://poser.pugx.org/saeven/zf2-circlical-recaptcha/downloads)](https://packagist.org/packages/saeven/zf2-circlical-recaptcha)
-
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/dd4edcd2c74c49948c51204d9e8378b1)](https://www.codacy.com/app/alemaire/zf2-circlical-recaptcha?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=Saeven/zf2-circlical-recaptcha&amp;utm_campaign=Badge_Grade)
+[![Codacy Badge](https://api.codacy.com/project/badge/Coverage/dd4edcd2c74c49948c51204d9e8378b1)](https://www.codacy.com/app/alemaire/zf2-circlical-recaptcha?utm_source=github.com&utm_medium=referral&utm_content=Saeven/zf2-circlical-recaptcha&utm_campaign=Badge_Coverage)
+[![Build Status](https://travis-ci.org/Saeven/zf2-circlical-recaptcha.svg?branch=master)](https://travis-ci.org/Saeven/zf2-circlical-recaptcha)
 
 Google just rolled out their great new CAPTCHA (fewer angry old people is always great!), and you want to get it into your ZF2 project!  Please users and management alike with this easy module.
 
