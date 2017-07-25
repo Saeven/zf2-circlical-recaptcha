@@ -16,6 +16,10 @@ class RecaptchaValidatorFactory implements FactoryInterface
         $validator = new RecaptchaValidator();
         $validator->setSecret($config['circlical']['recaptcha']['server']);
 
+        if (!empty($config['circlical']['recaptcha']['bypass'])) {
+            $validator->setCaptchaBypassed($config['circlical']['recaptcha']['bypass']);
+        }
+
         return $validator;
     }
 }

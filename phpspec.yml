@@ -1,0 +1,17 @@
+suites:
+    CirclicalRecaptcha:
+        namespace: CirclicalRecaptcha
+        spec_prefix: Spec
+        src_path: src
+        spec_path: bundle
+formatter.name: pretty
+extensions:
+  PhpSpecCodeCoverage\CodeCoverageExtension:
+    format:
+      - html
+      - clover
+    output:
+      html: build/coverage
+      clover: build/coverage.xml
+    whitelist:
+     - src

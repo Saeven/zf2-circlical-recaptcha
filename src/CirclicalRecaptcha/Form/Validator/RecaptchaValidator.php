@@ -26,30 +26,54 @@ class RecaptchaValidator extends AbstractValidator
         $this->secret = $key;
     }
 
+    /**
+     * @var bool skip checking the CAPTCHA
+     */
+    private $captchaBypassed = false;
 
-    private $error_codes = [];
+    /**
+     * Things like gherkin tests don't like CAPTCHAs.  This gives us a mechanism to disable them.
+     *
+     * @param bool $captchaBypassed
+     */
+    public function setCaptchaBypassed($captchaBypassed)
+    {
+        $this->captchaBypassed = $captchaBypassed;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isCaptchaBypassed()
+    {
+        return $this->captchaBypassed;
+    }
+
+    private $errorCodes = [];
 
     public function getErrorCodes()
     {
-        return $this->error_codes;
+        return $this->errorCodes;
     }
 
     public static function getIP()
     {
         $ip = false;
 
-        if (!empty($_SERVER["HTTP_CLIENT_IP"]))
+        if (!empty($_SERVER["HTTP_CLIENT_IP"])) {
             $ip = $_SERVER["HTTP_CLIENT_IP"];
+        }
 
         if (!empty($_SERVER['HTTP_X_FORWARDED_FOR'])) {
             // Put the IP's into an array which we shall work with shortly.
-            $ips = explode(", ", $_SERVER['HTTP_X_FORWARDED_FOR']);
+            $ips = explode(', ', $_SERVER['HTTP_X_FORWARDED_FOR']);
             if ($ip) {
                 array_unshift($ips, $ip);
                 $ip = false;
             }
 
-            for ($i = 0; $i < count($ips); $i++) {
+            $totalIPs = count($ips);
+            for ($i = 0; $i < $totalIPs; $i++) {
                 if (!preg_match("#^(10|172\.16|192\.168)\.#i", $ips[$i])) {
                     $ip = $ips[$i];
                     break;
@@ -57,20 +81,25 @@ class RecaptchaValidator extends AbstractValidator
             }
         }
 
-        if (!$ip && !isset($_SERVER['REMOTE_ADDR']))
+        if (!$ip && !isset($_SERVER['REMOTE_ADDR'])) {
             return null;
+        }
 
-        return ($ip ? $ip : $_SERVER['REMOTE_ADDR']);
+        return $ip ?: $_SERVER['REMOTE_ADDR'];
     }
 
     public function isValid($value)
     {
 
         if (!trim($value)) {
-            $this->error_codes[] = 'no-value-set';
+            $this->errorCodes[] = 'no-value-set';
             $this->error(self::NOT_ANSWERED);
 
             return false;
+        }
+
+        if ($this->captchaBypassed) {
+            return true;
         }
 
         // https://www.google.com/recaptcha/api/siteverify
@@ -85,11 +114,11 @@ class RecaptchaValidator extends AbstractValidator
         if (!$json['success']) {
             if (!empty($json['error-codes'])) {
                 foreach ($json['error-codes'] as $r) {
-                    $this->error_codes[] = $r;
+                    $this->errorCodes[] = $r;
                     $this->error($r);
                 }
             } else {
-                $this->error_codes[] = 'no-error-codes';
+                $this->errorCodes[] = 'no-error-codes';
                 $this->error(self::EXPIRED);
             }
 

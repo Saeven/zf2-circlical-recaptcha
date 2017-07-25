@@ -28,11 +28,16 @@ return [
         'recaptcha' => [
             'client' => 'yourclientkeygoeshere',
             'server' => 'yourserverkeygoeshere',
+            'bypass' => false,
         ],
     ],
 ];
 ```
 
+A third parameter is there, to help you work through functional tests (e.g., behat).  You could set 'bypass' to be true (don't validate the captcha) based on some fixed environment variable, example:
+```php
+'bypass' => getenv('SOMEKEY') === 'development'
+```
 
 # Templates
 
