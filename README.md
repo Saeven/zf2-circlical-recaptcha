@@ -1,4 +1,4 @@
-# zf2-circlical-recaptcha
+# Easy Google Captcha for Zend Framework 3
 [![Total Downloads](https://poser.pugx.org/saeven/zf2-circlical-recaptcha/downloads)](https://packagist.org/packages/saeven/zf2-circlical-recaptcha)
 
 
