@@ -91,15 +91,15 @@ class RecaptchaValidator extends AbstractValidator
     public function isValid($value)
     {
 
+        if ($this->captchaBypassed) {
+            return true;
+        }
+
         if (!trim($value)) {
             $this->errorCodes[] = 'no-value-set';
             $this->error(self::NOT_ANSWERED);
 
             return false;
-        }
-
-        if ($this->captchaBypassed) {
-            return true;
         }
 
         // https://www.google.com/recaptcha/api/siteverify
