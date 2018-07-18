@@ -25,6 +25,10 @@ class Recaptcha extends FormElement
                 $params['callback'] = $callback;
             }
 
+            if ($language = $element->getOption('language')) {
+                $params['hl'] = $language;
+            }
+
             $async = $element->getOption('async');
             $defer = $element->getOption('defer');
             $scriptTag = sprintf(

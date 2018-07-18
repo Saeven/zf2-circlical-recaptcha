@@ -96,6 +96,7 @@ class UserForm extends Form
                   'label'     => _( "Please complete the challenge below" ),
                   'no_sitekey' => false,
                   'no_script' => false,
+                  'language' => 'en', // see https://developers.google.com/recaptcha/docs/language
               ],
           ]);
 
