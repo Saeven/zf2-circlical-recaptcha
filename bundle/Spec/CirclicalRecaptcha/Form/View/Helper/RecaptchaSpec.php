@@ -20,6 +20,7 @@ class RecaptchaSpec extends ObjectBehavior
         $element->getSecret()->willReturn('abcd');
         $element->getOption('no_script')->willReturn(true);
         $element->getOption('no_sitekey')->willReturn(false);
+        $element->getOption('language')->willReturn(null);
 
         $control = sprintf(
             '<div class="form-group"><div%s><div class="g-recaptcha"%s></div></div></div>%s',
@@ -41,6 +42,7 @@ class RecaptchaSpec extends ObjectBehavior
         $element->getOption('callback')->willReturn('cb');
         $element->getOption('async')->willReturn('c');
         $element->getOption('defer')->willReturn('d');
+        $element->getOption('language')->willReturn(null);
 
 
         $params = [
