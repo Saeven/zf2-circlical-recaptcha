@@ -7,8 +7,7 @@
 Google just rolled out their great new CAPTCHA (fewer angry old people is always great!), and you want to get it into your ZF2/ZF3 project!  Please users and management alike with this easy module.
 
 
-![Captcha Image]
-(http://i.imgur.com/GWpqSH9.png)
+![Captcha Image](http://i.imgur.com/GWpqSH9.png)
 
 ## Requirements
 
