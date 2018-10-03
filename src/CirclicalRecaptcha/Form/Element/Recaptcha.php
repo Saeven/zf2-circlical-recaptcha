@@ -6,18 +6,20 @@ use Zend\Form\Element;
 
 class Recaptcha extends Element
 {
+    public const ELEMENT_TYPE = 'recaptcha';
+
     protected $attributes = [
-        'type' => 'recaptcha',
+        'type' => self::ELEMENT_TYPE,
     ];
 
-    protected $secret;
+    private $secret;
 
-    public function getSecret()
+    public function getSecret(): string
     {
         return $this->secret;
     }
 
-    public function __construct($secret)
+    public function __construct(string $secret)
     {
         parent::__construct();
         $this->secret = $secret;

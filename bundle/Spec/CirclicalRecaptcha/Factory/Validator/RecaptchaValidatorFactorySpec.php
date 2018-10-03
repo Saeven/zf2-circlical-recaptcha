@@ -9,23 +9,23 @@ use PhpSpec\ObjectBehavior;
 
 class RecaptchaValidatorFactorySpec extends ObjectBehavior
 {
-    function it_is_initializable()
+    public function it_is_initializable()
     {
         $this->shouldHaveType(RecaptchaValidatorFactory::class);
     }
 
-    function it_create_recaptcha_validators(ContainerInterface $container)
+    public function it_create_recaptcha_validators(ContainerInterface $container)
     {
         $this->__invoke($container, RecaptchaValidator::class)->shouldBeAnInstanceOf(RecaptchaValidator::class);
     }
 
-    function it_creates_recaptchas_with_environment_bypass(ContainerInterface $container)
+    public function it_creates_recaptchas_with_environment_bypass(ContainerInterface $container)
     {
         $container->get('config')->willReturn([
             'circlical' => [
                 'recaptcha' => [
                     'server' => 'somekey',
-                    'bypass' => true
+                    'bypass' => true,
                 ],
             ],
         ]);

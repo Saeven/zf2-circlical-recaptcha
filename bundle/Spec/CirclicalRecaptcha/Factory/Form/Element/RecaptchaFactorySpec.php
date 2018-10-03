@@ -9,12 +9,12 @@ use PhpSpec\ObjectBehavior;
 
 class RecaptchaFactorySpec extends ObjectBehavior
 {
-    function it_is_initializable()
+    public function it_is_initializable()
     {
         $this->shouldHaveType(RecaptchaFactory::class);
     }
 
-    function it_creates_recaptchas(ContainerInterface $container)
+    public function it_creates_recaptchas(ContainerInterface $container)
     {
         $container->get('config')->willReturn([
             'circlical' => [

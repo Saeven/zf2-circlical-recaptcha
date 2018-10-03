@@ -16,15 +16,15 @@ use Zend\ServiceManager\ServiceManager;
 
 class ModuleSpec extends ObjectBehavior
 {
-    public function it_adds_the_captcha_element_in_boostrap(MvcEvent $e, Application $application, ServiceManager $serviceManager, PluginManager $viewHelper, FormElement $formManager)
+    public function it_adds_the_captcha_element_in_boostrap(MvcEvent $event, Application $application, ServiceManager $serviceManager, PluginManager $viewHelper, FormElement $formManager)
     {
         $serviceManager->get('ViewHelperManager')->willReturn($viewHelper);
         $viewHelper->get('FormElement')->willReturn($formManager);
         $formManager->addType('recaptcha', 'recaptcha')->shouldBeCalled();
         $application->getServiceManager()->willReturn($serviceManager);
-        $e->getApplication()->willReturn($application);
+        $event->getApplication()->willReturn($application);
 
-        $this->onBootstrap($e);
+        $this->onBootstrap($event);
     }
 
     public function it_returns_config_from_file()

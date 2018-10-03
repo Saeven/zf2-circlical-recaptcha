@@ -6,8 +6,9 @@ use Zend\Validator\AbstractValidator;
 
 class RecaptchaValidator extends AbstractValidator
 {
-    const NOT_ANSWERED = 'not_answered';
-    const EXPIRED = 'expired';
+    public const NOT_ANSWERED = 'not_answered';
+
+    public const EXPIRED = 'expired';
 
     protected $messageTemplates = [
         'missing-input-secret' => 'The secret parameter is missing.',
@@ -21,42 +22,46 @@ class RecaptchaValidator extends AbstractValidator
 
     private $secret;
 
-    public function setSecret($key)
+    private $errorCodes;
+
+    private $captchaBypassed;
+
+    private $requestUrl;
+
+    private $responseTimeout;
+
+    private $challengeTimestamp;
+
+    private $challengeVerificationTimestamp;
+
+
+    public function __construct(string $secret, int $responseTimeout, $options = null)
     {
-        $this->secret = $key;
+        parent::__construct($options);
+
+        $this->secret = $secret;
+        $this->responseTimeout = $responseTimeout;
+        $this->errorCodes = [];
+        $this->captchaBypassed = false;
+
     }
 
-    /**
-     * @var bool skip checking the CAPTCHA
-     */
-    private $captchaBypassed = false;
-
-    /**
-     * Things like gherkin tests don't like CAPTCHAs.  This gives us a mechanism to disable them.
-     *
-     * @param bool $captchaBypassed
-     */
-    public function setCaptchaBypassed($captchaBypassed)
+    public function setCaptchaBypassed(bool $captchaBypassed): void
     {
         $this->captchaBypassed = $captchaBypassed;
     }
 
-    /**
-     * @return bool
-     */
-    public function isCaptchaBypassed()
+    public function isCaptchaBypassed(): bool
     {
         return $this->captchaBypassed;
     }
 
-    private $errorCodes = [];
-
-    public function getErrorCodes()
+    public function getErrorCodes(): array
     {
         return $this->errorCodes;
     }
 
-    public static function getIP()
+    public static function getIP(): ?string
     {
         $ip = false;
 
@@ -88,9 +93,8 @@ class RecaptchaValidator extends AbstractValidator
         return $ip ?: $_SERVER['REMOTE_ADDR'];
     }
 
-    public function isValid($value)
+    public function isValid($value): bool
     {
-
         if ($this->captchaBypassed) {
             return true;
         }
@@ -104,12 +108,13 @@ class RecaptchaValidator extends AbstractValidator
 
         // https://www.google.com/recaptcha/api/siteverify
         $ip = self::getIP();
-        $x = file_get_contents('https://www.google.com/recaptcha/api/siteverify?' . http_build_query([
+        $this->requestUrl = 'https://www.google.com/recaptcha/api/siteverify?' . http_build_query([
                 'secret' => $this->secret,
                 'response' => $value,
                 'remoteip' => $ip,
-            ]));
+            ]);
 
+        $x = file_get_contents($this->requestUrl);
         $json = json_decode($x, true);
         if (!$json['success']) {
             if (!empty($json['error-codes'])) {
@@ -123,6 +128,18 @@ class RecaptchaValidator extends AbstractValidator
             }
 
             return false;
+        }
+
+        if ($json['challenge_ts']) {
+            $this->challengeVerificationTimestamp = time();
+            $this->challengeTimestamp = $json['challenge_ts'];
+            $challengeTime = strtotime($json['challenge_ts']);
+            if ($challengeTime > 0 && ($this->challengeVerificationTimestamp - $challengeTime) > $this->responseTimeout) {
+                $this->errorCodes[] = 'no-error-codes';
+                $this->error(self::EXPIRED);
+
+                return false;
+            }
         }
 
         return true;

@@ -2,6 +2,8 @@
 
 namespace CirclicalRecaptcha;
 
+use CirclicalRecaptcha\Form\Element\Recaptcha;
+
 class Module
 {
     /**
@@ -12,10 +14,10 @@ class Module
         return include __DIR__ . '/../../config/module.config.php';
     }
 
-    public function onBootstrap($e)
+    public function onBootstrap($event)
     {
-        $application = $e->getApplication();
+        $application = $event->getApplication();
         $services = $application->getServiceManager();
-        $services->get('ViewHelperManager')->get('FormElement')->addType('recaptcha', 'recaptcha');
+        $services->get('ViewHelperManager')->get('FormElement')->addType(Recaptcha::ELEMENT_TYPE, Recaptcha::ELEMENT_TYPE);
     }
 }

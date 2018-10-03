@@ -4,7 +4,7 @@
 [![Codacy Badge](https://api.codacy.com/project/badge/Coverage/dd4edcd2c74c49948c51204d9e8378b1)](https://www.codacy.com/app/alemaire/zf2-circlical-recaptcha?utm_source=github.com&utm_medium=referral&utm_content=Saeven/zf2-circlical-recaptcha&utm_campaign=Badge_Coverage)
 [![Build Status](https://travis-ci.org/Saeven/zf2-circlical-recaptcha.svg?branch=master)](https://travis-ci.org/Saeven/zf2-circlical-recaptcha)
 
-Google just rolled out their great new CAPTCHA (fewer angry old people is always great!), and you want to get it into your ZF2 project!  Please users and management alike with this easy module.
+Google just rolled out their great new CAPTCHA (fewer angry old people is always great!), and you want to get it into your ZF2/ZF3 project!  Please users and management alike with this easy module.
 
 
 ![Captcha Image]
@@ -17,11 +17,11 @@ Add this line to your composer.json
 "saeven/zf2-circlical-recaptcha": "dev-master"
 ```
 
-Then include ```'CirclicalRecaptcha',``` in **module.config.php**.  The module should now be loaded.
+Then include ```'CirclicalRecaptcha',``` in your application's **module.config.php**.  The module should now be loaded.
 
 ## Configuration
 
-Copy **circlical.recaptcha.local.php** into your config/autoload folder.  Open it up, and insert your ReCaptcha keys (you get these from Google's website).
+Copy **circlical.recaptcha.local.php** into your config/autoload folder.  Open it up, and insert your ReCaptcha keys - you get these from [Google's website](https://www.google.com/recaptcha/admin#list).
 
 ```php
 <?php
@@ -31,19 +31,23 @@ return [
             'client' => 'yourclientkeygoeshere',
             'server' => 'yourserverkeygoeshere',
             'bypass' => false,
+            'default_timeout' => 900,
         ],
     ],
 ];
 ```
 
 A third parameter is there, to help you work through functional tests (e.g., behat).  You could set 'bypass' to be true (don't validate the captcha) based on some fixed environment variable, example:
+
 ```php
 'bypass' => getenv('SOMEKEY') === 'development'
 ```
 
+The fourth is the timeout (in seconds) that you permit between the time the captcha is served, and the time that it is solved.
+
 # Templates
 
-You need to add the captcha to your templates,  E.g., using Twig it'd look like:
+You need to add the captcha to your form templates,  E.g., using Twig it'd look like:
 
 ``` twig
 <div class="form-group" style="margin-bottom:25px;margin-top:25px;">
@@ -180,10 +184,12 @@ class UserInputFilter extends InputFilter implements UserInputFilterInterface
         if( $this->has_captcha )
         {
             $this->add([
-                'name'       => self::RECAPTCHA,
-                'required'   => true,
-                'break_chain_on_failure' => true,
-                'messages' => array( _( "Please complete the anti-robot check!" ) ),
+                'name' => self::RECAPTCHA,
+                'required' => true,
+                'messages' => [_("Please complete the anti-robot check!")],
+                'validators' => [
+                    ['name' => \CirclicalRecaptcha\Form\Validator\RecaptchaValidator::class,],
+                ],
             ]);
 
             $this->get( self::RECAPTCHA )->setBreakOnFailure( true );

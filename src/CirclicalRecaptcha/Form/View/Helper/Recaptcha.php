@@ -11,7 +11,7 @@ class Recaptcha extends FormElement
     public function render(ElementInterface $element)
     {
         $noScript = $element->getOption('no_script');
-        $noSitekey = $element->getOption('no_sitekey');
+        $noSiteKey = $element->getOption('no_sitekey');
         $elementId = $element->getAttribute('id');
 
         if (!$noScript) {
@@ -42,7 +42,7 @@ class Recaptcha extends FormElement
         return sprintf(
             '<div class="form-group"><div%s><div class="g-recaptcha"%s></div></div></div>%s',
             $elementId ? ' id="' . $elementId . '"' : '',
-            $noSitekey ? '' : ' data-sitekey="' . $element->getSecret() . '"',
+            $noSiteKey ? '' : ' data-sitekey="' . $element->getSecret() . '"',
             $noScript ? '' : $scriptTag
         );
     }

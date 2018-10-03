@@ -4,17 +4,15 @@ namespace Spec\CirclicalRecaptcha\Form\View\Helper;
 
 use CirclicalRecaptcha\Form\View\Helper\Recaptcha;
 use PhpSpec\ObjectBehavior;
-use Prophecy\Argument;
-use Zend\Form\ElementInterface;
 
 class RecaptchaSpec extends ObjectBehavior
 {
-    function it_is_initializable()
+    public function it_is_initializable()
     {
         $this->shouldHaveType(Recaptcha::class);
     }
 
-    function it_can_render_properly(\CirclicalRecaptcha\Form\Element\Recaptcha $element)
+    public function it_can_render_properly(\CirclicalRecaptcha\Form\Element\Recaptcha $element)
     {
         $element->getAttribute('id')->willReturn('the-element');
         $element->getSecret()->willReturn('abcd');
@@ -32,7 +30,7 @@ class RecaptchaSpec extends ObjectBehavior
         $this->render($element)->shouldBeLike(trim($control));
     }
 
-    function it_can_render_properly_with_a_script(\CirclicalRecaptcha\Form\Element\Recaptcha $element)
+    public function it_can_render_properly_with_a_script(\CirclicalRecaptcha\Form\Element\Recaptcha $element)
     {
         $element->getAttribute('id')->willReturn('the-element');
         $element->getSecret()->willReturn('abcd');

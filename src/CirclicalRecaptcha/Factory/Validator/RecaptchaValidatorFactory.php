@@ -9,15 +9,17 @@ use Zend\ServiceManager\Factory\FactoryInterface;
 
 class RecaptchaValidatorFactory implements FactoryInterface
 {
+    private const DEFAULT_TIMEOUT = 900;
+
     public function __invoke(ContainerInterface $container, $requestedName, array $options = null)
     {
         $config = $container->get('config');
+        $config = $config['circlical']['recaptcha'];
 
-        $validator = new RecaptchaValidator();
-        $validator->setSecret($config['circlical']['recaptcha']['server']);
+        $validator = new RecaptchaValidator($config['server'] ?? 'not configured', $config['default_timeout'] ?? self::DEFAULT_TIMEOUT);
 
-        if (!empty($config['circlical']['recaptcha']['bypass'])) {
-            $validator->setCaptchaBypassed($config['circlical']['recaptcha']['bypass']);
+        if (!empty($config['bypass'])) {
+            $validator->setCaptchaBypassed($config['bypass']);
         }
 
         return $validator;
