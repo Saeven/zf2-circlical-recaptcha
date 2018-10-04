@@ -10,11 +10,20 @@ class RecaptchaValidator extends AbstractValidator
 
     public const EXPIRED = 'expired';
 
+    public const ERROR_MISSING_SECRET = 'missing-input-secret';
+
+    public const ERROR_INVALID_SECRET = 'invalid-input-secret';
+
+    public const ERROR_MISSING_INPUT_RESPONSE = 'missing-input-response';
+
+    public const ERROR_INVALID_INPUT_RESPONSE = 'invalid-input-response';
+
+
     protected $messageTemplates = [
-        'missing-input-secret' => 'The secret parameter is missing.',
-        'invalid-input-secret' => 'The secret parameter is invalid or malformed.',
-        'missing-input-response' => 'The response parameter is missing.',
-        'invalid-input-response' => 'The response parameter is invalid or malformed.',
+        self::ERROR_MISSING_SECRET => 'The secret parameter is missing.',
+        self::ERROR_INVALID_SECRET => 'The secret parameter is invalid or malformed.',
+        self::ERROR_MISSING_INPUT_RESPONSE => 'The response parameter is missing.',
+        self::ERROR_INVALID_INPUT_RESPONSE => 'The response parameter is invalid or malformed.',
         self::NOT_ANSWERED => 'You must complete the challenge.',
         self::EXPIRED => 'Your form timed out, please try again.',
     ];
@@ -63,34 +72,34 @@ class RecaptchaValidator extends AbstractValidator
 
     public static function getIP(): ?string
     {
-        $ip = false;
+        $ipAddress = false;
 
         if (!empty($_SERVER["HTTP_CLIENT_IP"])) {
-            $ip = $_SERVER["HTTP_CLIENT_IP"];
+            $ipAddress = $_SERVER["HTTP_CLIENT_IP"];
         }
 
         if (!empty($_SERVER['HTTP_X_FORWARDED_FOR'])) {
             // Put the IP's into an array which we shall work with shortly.
             $ips = explode(', ', $_SERVER['HTTP_X_FORWARDED_FOR']);
-            if ($ip) {
-                array_unshift($ips, $ip);
-                $ip = false;
+            if ($ipAddress) {
+                array_unshift($ips, $ipAddress);
+                $ipAddress = false;
             }
 
             $totalIPs = count($ips);
             for ($i = 0; $i < $totalIPs; $i++) {
                 if (!preg_match("#^(10|172\.16|192\.168)\.#i", $ips[$i])) {
-                    $ip = $ips[$i];
+                    $ipAddress = $ips[$i];
                     break;
                 }
             }
         }
 
-        if (!$ip && !isset($_SERVER['REMOTE_ADDR'])) {
+        if (!$ipAddress && !isset($_SERVER['REMOTE_ADDR'])) {
             return null;
         }
 
-        return $ip ?: $_SERVER['REMOTE_ADDR'];
+        return $ipAddress ?: $_SERVER['REMOTE_ADDR'];
     }
 
     public function isValid($value): bool
@@ -107,15 +116,20 @@ class RecaptchaValidator extends AbstractValidator
         }
 
         // https://www.google.com/recaptcha/api/siteverify
-        $ip = self::getIP();
+        $ipAddress = self::getIP();
         $this->requestUrl = 'https://www.google.com/recaptcha/api/siteverify?' . http_build_query([
                 'secret' => $this->secret,
                 'response' => $value,
-                'remoteip' => $ip,
+                'remoteip' => $ipAddress,
             ]);
 
-        $x = file_get_contents($this->requestUrl);
-        $json = json_decode($x, true);
+        $googleResponse = file_get_contents($this->requestUrl);
+        $json = json_decode($googleResponse, true);
+        if (json_last_error() !== JSON_ERROR_NONE) {
+            $this->errorCodes[] = 'invalid-input-response';
+            $this->error('invalid-input-response');
+        }
+
         if (!$json['success']) {
             if (!empty($json['error-codes'])) {
                 foreach ($json['error-codes'] as $r) {
