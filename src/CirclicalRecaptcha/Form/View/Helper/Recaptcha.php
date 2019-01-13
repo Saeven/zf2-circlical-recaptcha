@@ -11,7 +11,7 @@ class Recaptcha extends FormElement
     public function render(ElementInterface $element)
     {
         $noScript = $element->getOption('no_script');
-        $noSiteKey = $element->getOption('no_sitekey');
+        $noSitekey = $element->getOption('no_sitekey');
         $elementId = $element->getAttribute('id');
 
         if (!$noScript) {
@@ -21,8 +21,8 @@ class Recaptcha extends FormElement
                 $params['render'] = $render;
             }
 
-            if ($callback = $element->getOption('callback')) {
-                $params['callback'] = $callback;
+            if ($callback = $element->getOption('onload')) {
+                $params['onload'] = $callback;
             }
 
             if ($language = $element->getOption('language')) {
@@ -40,9 +40,9 @@ class Recaptcha extends FormElement
         }
 
         return sprintf(
-            '<div class="form-group"><div%s><div class="g-recaptcha"%s></div></div></div>%s',
+            '<div class="form-group"><div %s class="g-recaptcha"%s></div></div>%s',
             $elementId ? ' id="' . $elementId . '"' : '',
-            $noSiteKey ? '' : ' data-sitekey="' . $element->getSecret() . '"',
+            $noSitekey ? '' : ' data-sitekey="' . $element->getSecret() . '"',
             $noScript ? '' : $scriptTag
         );
     }
