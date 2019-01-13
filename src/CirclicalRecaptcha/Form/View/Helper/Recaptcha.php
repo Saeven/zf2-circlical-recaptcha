@@ -40,7 +40,7 @@ class Recaptcha extends FormElement
         }
 
         return sprintf(
-            '<div class="form-group"><div %s class="g-recaptcha"%s></div></div>%s',
+            '<div class="form-group"><div%s class="g-recaptcha"%s></div></div>%s',
             $elementId ? ' id="' . $elementId . '"' : '',
             $noSitekey ? '' : ' data-sitekey="' . $element->getSecret() . '"',
             $noScript ? '' : $scriptTag

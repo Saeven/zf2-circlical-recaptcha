@@ -21,7 +21,7 @@ class RecaptchaSpec extends ObjectBehavior
         $element->getOption('language')->willReturn(null);
 
         $control = sprintf(
-            '<div class="form-group"><div%s><div class="g-recaptcha"%s></div></div></div>%s',
+            '<div class="form-group"><div%s class="g-recaptcha"%s></div></div>%s',
             ' id="the-element"',
             ' data-sitekey="abcd"',
             ''
@@ -37,7 +37,7 @@ class RecaptchaSpec extends ObjectBehavior
         $element->getOption('no_script')->willReturn(false);
         $element->getOption('no_sitekey')->willReturn(false);
         $element->getOption('render')->willReturn('a');
-        $element->getOption('callback')->willReturn('cb');
+        $element->getOption('onload')->willReturn('cb');
         $element->getOption('async')->willReturn('c');
         $element->getOption('defer')->willReturn('d');
         $element->getOption('language')->willReturn(null);
@@ -45,11 +45,11 @@ class RecaptchaSpec extends ObjectBehavior
 
         $params = [
             'render' => 'a',
-            'callback' => 'cb',
+            'onload' => 'cb',
         ];
 
         $control = sprintf(
-            '<div class="form-group"><div%s><div class="g-recaptcha"%s></div></div></div>%s',
+            '<div class="form-group"><div%s class="g-recaptcha"%s></div></div>%s',
             ' id="the-element"',
             ' data-sitekey="abcd"',
             sprintf(
@@ -59,6 +59,7 @@ class RecaptchaSpec extends ObjectBehavior
                 'd' ? ' defer' : ''
             )
         );
+
         $this->render($element)->shouldBeLike(trim($control));
     }
 }
