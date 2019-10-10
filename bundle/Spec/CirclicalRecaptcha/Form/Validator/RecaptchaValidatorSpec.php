@@ -55,4 +55,17 @@ class RecaptchaValidatorSpec extends ObjectBehavior
         $this->isValid('anything')->shouldBe(true);
     }
 
+    public function it_returns_an_error_when_the_site_is_inaccessible()
+    {
+        $class = new \ReflectionClass($this->getWrappedObject());
+        $property = $class->getProperty('GOOGLE_REQUEST_URL');
+        $property->setAccessible(true);
+        $property->setValue(null, 'https://0.com');
+
+        $this->isValid('123')->shouldBe(false);
+        $this->getMessages()->shouldHaveKey(RecaptchaValidator::ERROR_CONNECTION_FAILED);
+
+
+    }
+
 }

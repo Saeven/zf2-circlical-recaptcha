@@ -32,6 +32,7 @@
   "require-dev": {
     "phpspec/phpspec": "^3.1",
     "henrikbjorn/phpspec-code-coverage": "^3.0",
+    "phpunit/php-file-iterator": "1.4.2",
     "codacy/coverage": "^1.0"
   },
   "autoload": {

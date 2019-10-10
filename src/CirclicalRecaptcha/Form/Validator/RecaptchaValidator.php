@@ -18,6 +18,9 @@ class RecaptchaValidator extends AbstractValidator
 
     public const ERROR_INVALID_INPUT_RESPONSE = 'invalid-input-response';
 
+    public const ERROR_CONNECTION_FAILED = 'connection-failed';
+
+    private static $GOOGLE_REQUEST_URL = 'https://www.google.com/recaptcha/api/siteverify';
 
     protected $messageTemplates = [
         self::ERROR_MISSING_SECRET => 'The secret parameter is missing.',
@@ -26,6 +29,7 @@ class RecaptchaValidator extends AbstractValidator
         self::ERROR_INVALID_INPUT_RESPONSE => 'The response parameter is invalid or malformed.',
         self::NOT_ANSWERED => 'You must complete the challenge.',
         self::EXPIRED => 'Your form timed out, please try again.',
+        self::ERROR_CONNECTION_FAILED => 'The captcha could not be verified, please try again.',
     ];
 
 
@@ -117,17 +121,27 @@ class RecaptchaValidator extends AbstractValidator
 
         // https://www.google.com/recaptcha/api/siteverify
         $ipAddress = self::getIP();
-        $this->requestUrl = 'https://www.google.com/recaptcha/api/siteverify?' . http_build_query([
+        $this->requestUrl = static::$GOOGLE_REQUEST_URL . '?' . http_build_query([
                 'secret' => $this->secret,
                 'response' => $value,
                 'remoteip' => $ipAddress,
             ]);
 
-        $googleResponse = file_get_contents($this->requestUrl);
-        $json = json_decode($googleResponse, true);
-        if (json_last_error() !== JSON_ERROR_NONE) {
-            $this->errorCodes[] = 'invalid-input-response';
-            $this->error('invalid-input-response');
+        try {
+            $googleResponse = @file_get_contents($this->requestUrl);
+            if( $googleResponse === false ){
+                throw new \ErrorException('Site could not be reached');
+            }
+
+            $json = json_decode($googleResponse, true);
+            if (json_last_error() !== JSON_ERROR_NONE) {
+                $this->errorCodes[] = self::ERROR_INVALID_INPUT_RESPONSE;
+                $this->error(self::ERROR_INVALID_INPUT_RESPONSE);
+            }
+        } catch (\ErrorException $errorException) {
+            $this->errorCodes[] = self::ERROR_CONNECTION_FAILED;
+            $this->error(self::ERROR_CONNECTION_FAILED);
+            return false;
         }
 
         if (!$json['success']) {
