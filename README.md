@@ -66,14 +66,14 @@ If you're unfamiliar with ZF2, here's sample form code that implements the Captc
 
 namespace CirclicalUser\Form;
 
-use Zend\Form\Element,
-    Zend\Captcha,
-    Zend\InputFilter,
-    Zend\Form\Element\Password,
-    Zend\Form\Element\Text,
-    Zend\Form\Form,
+use Laminas\Form\Element,
+    Laminas\Captcha,
+    Laminas\InputFilter,
+    Laminas\Form\Element\Password,
+    Laminas\Form\Element\Text,
+    Laminas\Form\Form,
     CirclicalUser\Form\Element\Recaptcha,
-    Zend\Form\Element\Button;
+    Laminas\Form\Element\Button;
 
 
 class UserForm extends Form
@@ -152,15 +152,15 @@ namespace CirclicalUser\InputFilter;
 use CirclicalUser\Form\Validator\RecaptchaValidator;
 use Doctrine\Common\Persistence\ObjectRepository;
 use DoctrineModule\Validator\NoObjectExists;
-use Zend\Filter\StringToLower;
-use Zend\Filter\StringTrim;
-use Zend\InputFilter\InputFilter;
-use Zend\Form\Element;
-use Zend\Captcha;
+use Laminas\Filter\StringToLower;
+use Laminas\Filter\StringTrim;
+use Laminas\InputFilter\InputFilter;
+use Laminas\Form\Element;
+use Laminas\Captcha;
 use CirclicalUser\Form\Filter\ArrayBlock;
 use HTMLPurifier;
-use Zend\Validator\EmailAddress;
-use Zend\Validator\StringLength;
+use Laminas\Validator\EmailAddress;
+use Laminas\Validator\StringLength;
 
 class UserInputFilter extends InputFilter implements UserInputFilterInterface
 {

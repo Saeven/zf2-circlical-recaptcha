@@ -5,14 +5,14 @@ namespace Spec\CirclicalRecaptcha;
 use CirclicalRecaptcha\Module;
 use PhpSpec\ObjectBehavior;
 use Prophecy\Argument;
-use Zend\Form\FormElementManager\FormElementManagerV3Polyfill;
-use Zend\Form\FormElementManagerFactory;
-use Zend\Form\View\Helper\FormElement;
-use Zend\Mvc\Application;
-use Zend\Mvc\Controller\PluginManager;
-use Zend\Mvc\MvcEvent;
-use Zend\Mvc\Service\ViewHelperManagerFactory;
-use Zend\ServiceManager\ServiceManager;
+use Laminas\Form\FormElementManager\FormElementManagerV3Polyfill;
+use Laminas\Form\FormElementManagerFactory;
+use Laminas\Form\View\Helper\FormElement;
+use Laminas\Mvc\Application;
+use Laminas\Mvc\Controller\PluginManager;
+use Laminas\Mvc\MvcEvent;
+use Laminas\Mvc\Service\ViewHelperManagerFactory;
+use Laminas\ServiceManager\ServiceManager;
 
 class ModuleSpec extends ObjectBehavior
 {

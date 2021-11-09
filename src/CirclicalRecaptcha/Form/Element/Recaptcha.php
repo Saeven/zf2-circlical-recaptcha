@@ -2,7 +2,7 @@
 
 namespace CirclicalRecaptcha\Form\Element;
 
-use Zend\Form\Element;
+use Laminas\Form\Element;
 
 class Recaptcha extends Element
 {

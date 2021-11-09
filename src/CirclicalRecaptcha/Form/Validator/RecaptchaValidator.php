@@ -2,7 +2,7 @@
 
 namespace CirclicalRecaptcha\Form\Validator;
 
-use Zend\Validator\AbstractValidator;
+use Laminas\Validator\AbstractValidator;
 
 class RecaptchaValidator extends AbstractValidator
 {

@@ -4,7 +4,7 @@ namespace CirclicalRecaptcha\Factory\Validator;
 
 use CirclicalRecaptcha\Form\Validator\RecaptchaValidator;
 use Interop\Container\ContainerInterface;
-use Zend\ServiceManager\Factory\FactoryInterface;
+use Laminas\ServiceManager\Factory\FactoryInterface;
 
 
 class RecaptchaValidatorFactory implements FactoryInterface

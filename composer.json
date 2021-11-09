@@ -1,43 +1,44 @@
 {
-  "name": "saeven/zf2-circlical-recaptcha",
-  "description": "ZF2 module that lets you easily incorporate Google's new, simpler recaptcha (I am not a robot)",
-  "type": "library",
-  "license": "MIT",
-  "homepage": "https://github.com/Saeven/zf2-circlical-recaptcha",
-  "keywords": [
-    "zf2",
-    "google",
-    "recaptcha",
-    "form",
-    "captcha"
-  ],
-  "authors": [
-    {
-      "name": "Alexandre Lemaire",
-      "email": "alemaire@circlical.com",
-      "homepage": "http://circlical.com/",
-      "role": "Developer"
+    "name": "saeven/zf2-circlical-recaptcha",
+    "description": "ZF2 module that lets you easily incorporate Google's new, simpler recaptcha (I am not a robot)",
+    "type": "library",
+    "license": "MIT",
+    "homepage": "https://github.com/Saeven/zf2-circlical-recaptcha",
+    "keywords": [
+        "zf2",
+        "google",
+        "recaptcha",
+        "form",
+        "captcha"
+    ],
+    "authors": [
+        {
+            "name": "Alexandre Lemaire",
+            "email": "alemaire@circlical.com",
+            "homepage": "http://circlical.com/",
+            "role": "Developer"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {
+        "php": ">=7.4",
+        "laminas/laminas-servicemanager": "^3.0.1",
+        "laminas/laminas-inputfilter": "^2.12.0",
+        "laminas/laminas-form": "^2.17.0",
+        "laminas/laminas-view": "^2.14.0",
+        "laminas/laminas-mvc": "^3.3.0",
+        "ext-json": "*"
+    },
+    "prefer-stable": true,
+    "require-dev": {
+        "phpspec/phpspec": "^3.1",
+        "henrikbjorn/phpspec-code-coverage": "^3.0",
+        "phpunit/php-file-iterator": "1.4.2",
+        "codacy/coverage": "^1.0"
+    },
+    "autoload": {
+        "psr-0": {
+            "CirclicalRecaptcha\\": "src/"
+        }
     }
-  ],
-  "minimum-stability": "dev",
-  "require": {
-    "php": ">=7.1",
-    "zendframework/zend-servicemanager": "^3.0.1@stable",
-    "zendframework/zend-inputfilter": "^2.7.3@stable",
-    "zendframework/zend-form": "^2.9.2@stable",
-    "zendframework/zend-view": "~2.9@stable",
-    "zendframework/zend-mvc": "@stable",
-    "ext-json": "*"
-  },
-  "require-dev": {
-    "phpspec/phpspec": "^3.1",
-    "henrikbjorn/phpspec-code-coverage": "^3.0",
-    "phpunit/php-file-iterator": "1.4.2",
-    "codacy/coverage": "^1.0"
-  },
-  "autoload": {
-    "psr-0": {
-      "CirclicalRecaptcha\\": "src/"
-    }
-  }
 }
