@@ -9,12 +9,17 @@ use PhpSpec\ObjectBehavior;
 
 class RecaptchaValidatorFactorySpec extends ObjectBehavior
 {
+    public function let(ContainerInterface $container)
+    {
+        $container->get('config')->willReturn([]);
+    }
+
     public function it_is_initializable()
     {
         $this->shouldHaveType(RecaptchaValidatorFactory::class);
     }
 
-    public function it_create_recaptcha_validators(ContainerInterface $container)
+    public function it_creates_recaptcha_validators(ContainerInterface $container)
     {
         $this->__invoke($container, RecaptchaValidator::class)->shouldBeAnInstanceOf(RecaptchaValidator::class);
     }

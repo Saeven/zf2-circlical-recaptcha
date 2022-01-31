@@ -14,7 +14,7 @@ class RecaptchaValidatorFactory implements FactoryInterface
     public function __invoke(ContainerInterface $container, $requestedName, array $options = null)
     {
         $config = $container->get('config');
-        $config = $config['circlical']['recaptcha'];
+        $config = $config['circlical']['recaptcha'] ?? [];
 
         $validator = new RecaptchaValidator($config['server'] ?? 'not configured', $config['default_timeout'] ?? self::DEFAULT_TIMEOUT);
 
