@@ -8,7 +8,7 @@ use Laminas\Form\View\Helper\FormElement;
 
 class Recaptcha extends FormElement
 {
-    public function render(ElementInterface $element)
+    public function render(ElementInterface $element): string
     {
         $noScript = $element->getOption('no_script');
         $noSitekey = $element->getOption('no_sitekey');
