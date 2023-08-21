@@ -24,7 +24,7 @@
         "php": ">=7.4",
         "laminas/laminas-servicemanager": "^3.0.1",
         "laminas/laminas-inputfilter": "^2.12.0",
-        "laminas/laminas-form": "3.1.1",
+        "laminas/laminas-form": "^3.1.1",
         "laminas/laminas-view": "^2.14",
         "laminas/laminas-mvc": "^3.3.0",
         "ext-json": "*"
@@ -32,7 +32,8 @@
     "prefer-stable": true,
     "require-dev": {
         "phpspec/phpspec": "^7.0.1",
-        "friends-of-phpspec/phpspec-code-coverage": "@stable",
+        "friends-of-phpspec/phpspec-code-coverage": "v5.0.0",
+        "phpunit/php-code-coverage": "@stable",
         "phpunit/php-file-iterator": "1.4.2",
         "codacy/coverage": "^1.0"
     },
